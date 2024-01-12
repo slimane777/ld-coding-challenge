@@ -1,19 +1,35 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import useFetchData from './hooks/useFetchData';
 import useMaxMinPower from './hooks/useMaxMinPower';
+import { Header } from './components/Header';
+import styled from 'styled-components';
+import { useDebounce } from './hooks/useDebounce';
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 50px
+`
+
+const apiUrl = '/pokemon.json';
 
 function App() {
   const [pageSize, setPageSize] = useState(10);
+  const [threshold, setThreshold] = useState(0);
+  const [search, setSearch] = useState("");
 
-  const apiUrl = '/pokemon.json'; // Replace with your actual API endpoint
+  const debouncedSearch = useDebounce(search)
+  const debouncedThreshold = useDebounce(threshold)
+
   const { 
     data: pokemons, 
     loading, error, totalPages,
     perPage, currentPage, setCurrentPage,
-    handlePageChange, searchTerm, handleSearch,
-    handleThreshold, threshold
+    handlePageChange,
   } =
-    useFetchData(apiUrl, pageSize);
+    useFetchData(apiUrl, pageSize, debouncedSearch, debouncedThreshold);
 
   const {minPower, maxPower} = useMaxMinPower(pokemons)
 
@@ -24,6 +40,16 @@ function App() {
 
   const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
 
+  const handleSearch = (event) => {
+    setSearch(event.target.value)
+    setCurrentPage(1)
+  }
+
+  const handleThreshold = (event) => {
+    setThreshold(event.target.value)
+    setCurrentPage(1)
+  }
+
   if(loading){
     return <div>loading....</div>
   }
@@ -33,18 +59,14 @@ function App() {
   }
 
   return (
-    <div>
-      <input
-        type="text"
-        placeholder="Search by Pokemon name"
-        value={searchTerm}
-        onChange={(event) => handleSearch(event.target.value)}
-      />
-      <input
-        type="number"
-        placeholder="Search by threshold"
-        value={threshold}
-        onChange={(event) => handleThreshold(event.target.value)}
+    <Container>
+      <Header 
+        handleSearch={handleSearch} 
+        handleThreshold={handleThreshold}
+        searchTerm={search}
+        threshold={threshold}
+        minPower={minPower}
+        maxPower={maxPower}
       />
       <select value={pageSize} onChange={handlePageSizeChange}>
         <option value="10">10</option>
@@ -98,7 +120,7 @@ function App() {
           </button>
         ))}
       </div>
-    </div>
+    </Container>
   );
 }
 

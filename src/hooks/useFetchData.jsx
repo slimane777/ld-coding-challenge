@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
-const useFetchData = (url, perPage = 10) => {
+const useFetchData = (url, perPage = 10, search = '', threshold) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [threshold, setThreshold] = useState(0);
+//   const [searchTerm, setSearchTerm] = useState('');
+//   const [threshold, setThreshold] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -31,19 +31,8 @@ const useFetchData = (url, perPage = 10) => {
         let filteredData = []
 
         filteredData = pokemonData.filter((pokemon) =>
-            pokemon.name.toLowerCase().includes(searchTerm.toLowerCase())
+            pokemon.name.toLowerCase().includes(search.toLowerCase())
         ).filter((pokemon) => pokemon.power >= threshold)
-
-        // if(searchTerm !== ''){
-        //     filteredData = pokemonData.filter((pokemon) =>
-        //         pokemon.name.toLowerCase().includes(searchTerm.toLowerCase())
-        //     )
-        // } else if (threshold > 0){
-        //     // 
-        // }         
-        // else {
-        //     filteredData = pokemonData
-        // }
 
         const paginatedData = filteredData.slice(
             (currentPage - 1) * perPage,
@@ -60,7 +49,7 @@ const useFetchData = (url, perPage = 10) => {
     };
 
     fetchData();
-  }, [url, currentPage, perPage, searchTerm, threshold]);
+  }, [url, currentPage, perPage, threshold, search]);
 
   const handlePageChange = (newPage) => {
     if (newPage >= 1 && newPage <= totalPages) {
@@ -68,15 +57,15 @@ const useFetchData = (url, perPage = 10) => {
     }
   };
 
-  const handleSearch = (newSearchTerm) => {
-    setSearchTerm(newSearchTerm);
-    setCurrentPage(1)
-  };
+//   const handleSearch = (newSearchTerm) => {
+//     setSearchTerm(newSearchTerm);
+//     setCurrentPage(1)
+//   };
 
-  const handleThreshold = (newThreshold) => {
-    setThreshold(newThreshold)
-    setCurrentPage(1)
-  }
+//   const handleThreshold = (newThreshold) => {
+//     setThreshold(newThreshold)
+//     setCurrentPage(1)
+//   }
 
   return {
     data,
@@ -86,11 +75,11 @@ const useFetchData = (url, perPage = 10) => {
     setCurrentPage,
     totalPages,
     perPage,
-    searchTerm,
-    threshold,
+    // searchTerm,
+    // threshold,
     handlePageChange,
-    handleSearch,
-    handleThreshold,
+    // handleSearch,
+    // handleThreshold,
   };
 };
 
