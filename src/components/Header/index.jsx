@@ -1,6 +1,6 @@
 import * as Styled from './styles'
 import { TbHeartPlus, TbSearch } from "react-icons/tb";
-
+import PropTypes from 'prop-types'
 
 export const Header = ({
     handleSearch, 
@@ -28,3 +28,12 @@ export const Header = ({
         </Styled.Container>
     )
 }
+
+Header.propTypes = {
+    threshold: PropTypes.number,
+    handleSearch: PropTypes.func, 
+    handleThreshold: PropTypes.func, 
+    searchTerm: PropTypes.string, 
+    minPower: PropTypes.number,
+    maxPower: PropTypes.number,
+};

@@ -1,14 +1,11 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
-const useFetchData = (url, perPage = 10, search = '', threshold) => {
+const useFetchData = (url, perPage, search = '', threshold, currentPage) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-//   const [searchTerm, setSearchTerm] = useState('');
-//   const [threshold, setThreshold] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -40,7 +37,7 @@ const useFetchData = (url, perPage = 10, search = '', threshold) => {
         );
 
         setData(paginatedData);
-        setTotalPages(Math.ceil(pokemonData.length / perPage));
+        setTotalPages(Math.ceil(filteredData.length / perPage));
         setLoading(false);
       } catch (error) {
         setError('Something wrong happened!' + error);
@@ -49,37 +46,13 @@ const useFetchData = (url, perPage = 10, search = '', threshold) => {
     };
 
     fetchData();
-  }, [url, currentPage, perPage, threshold, search]);
-
-  const handlePageChange = (newPage) => {
-    if (newPage >= 1 && newPage <= totalPages) {
-      setCurrentPage(newPage);
-    }
-  };
-
-//   const handleSearch = (newSearchTerm) => {
-//     setSearchTerm(newSearchTerm);
-//     setCurrentPage(1)
-//   };
-
-//   const handleThreshold = (newThreshold) => {
-//     setThreshold(newThreshold)
-//     setCurrentPage(1)
-//   }
+  }, [url, perPage, threshold, search, currentPage]);
 
   return {
     data,
     loading,
     error,
-    currentPage,
-    setCurrentPage,
     totalPages,
-    perPage,
-    // searchTerm,
-    // threshold,
-    handlePageChange,
-    // handleSearch,
-    // handleThreshold,
   };
 };
 
