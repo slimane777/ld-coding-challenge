@@ -8,6 +8,7 @@ export const Container = styled.div`
     justify-content: flex-end;
     padding: 10px;
     gap: 16px;
+    margin-top: 10px;
 `
 
 export const Select = styled.select`
@@ -16,6 +17,7 @@ export const Select = styled.select`
 
 export const Span = styled.span`
     font-size: 14px;
+    color: #202b36;
 `
 
 export const Wrapper = styled.div`

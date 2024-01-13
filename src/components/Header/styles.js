@@ -6,7 +6,7 @@ export const Container = styled.div`
     background: #FFF;
     padding: 16px;
     border-radius: 12px;
-    box-shadow: 1px 1px 30px #00000020;
+    box-shadow: 0px 10px 15px 0px #00000010;
     border: 1px solid #f9fafa;
     display: flex;
     flex-direction: column;
@@ -40,4 +40,9 @@ export const Input = styled.div`
         top: 10px;
         color: #a2afba;
     }
+`
+
+export const Span = styled.span`
+    font-size: 14px;
+    color: #202b36
 `

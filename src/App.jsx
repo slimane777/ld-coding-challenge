@@ -5,15 +5,19 @@ import { Header } from './components/Header';
 import styled from 'styled-components';
 import { useDebounce } from './hooks/useDebounce';
 import { Pagination } from './components/Pagination';
+import { Table } from './components/Table';
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 50px;
+  gap: 70px;
   max-width: 1024px;
   margin: 0 auto;
+  padding-top: 50px;
+  .table-wrapper {
+    width: 100%;
+  }
 `
 
 const apiUrl = '/pokemon.json';
@@ -75,37 +79,8 @@ function App() {
         loading ?
           <div>loading....</div>
         :
-          <div style={{width: '100%'}}>
-            <table>
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Type</th>
-                <th>HP</th>
-                <th>Attack</th>
-                <th>Defense</th>
-                <th>Special Attack</th>
-                <th>Special Defense</th>
-                <th>Speed</th>
-                <th>Power</th>
-              </tr>
-            </thead>
-            <tbody>
-              {pokemons.map((pokemon) => (
-                <tr key={pokemon.id}>
-                  <td>{pokemon.name}</td>
-                  <td>{pokemon.type.join(', ')}</td>
-                  <td>{pokemon.hp}</td>
-                  <td>{pokemon.attack}</td>
-                  <td>{pokemon.defense}</td>
-                  <td>{pokemon.special_attack}</td>
-                  <td>{pokemon.special_defense}</td>
-                  <td>{pokemon.speed}</td>
-                  <td>{pokemon.power}</td>
-                </tr>
-              ))}
-            </tbody>
-            </table>
+          <div className='table-wrapper'>
+            <Table data={pokemons} />
             <Pagination 
               pageSize={pageSize}
               handlePageSizeChange={handlePageSizeChange}

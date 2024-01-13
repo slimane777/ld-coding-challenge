@@ -23,8 +23,8 @@ export const Header = ({
                 </Styled.Input>
             </Styled.Wrapper>
 
-            <span>Min Power: {minPower}</span>
-            <span>Max Power: {maxPower}</span>
+            <Styled.Span>Min Power: {minPower}</Styled.Span>
+            <Styled.Span>Max Power: {maxPower}</Styled.Span>
         </Styled.Container>
     )
 }
