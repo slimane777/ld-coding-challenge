@@ -7,7 +7,8 @@ export const Pagination = ({
     handlePageSizeChange, 
     handlePageChange, 
     currentPage,
-    totalPages
+    totalPages,
+    total,
 }) => {
 
     const handleNext = () => {
@@ -28,7 +29,7 @@ export const Pagination = ({
             </Styled.Select>
 
             <Styled.Span>
-                {currentPage} of {totalPages}
+                {`${currentPage*pageSize - pageSize+1} - ${currentPage*pageSize}`} of {total}
             </Styled.Span>
 
             <Styled.Wrapper>
@@ -55,4 +56,5 @@ Pagination.propTypes = {
     handlePageChange: PropTypes.func, 
     currentPage: PropTypes.number,
     totalPages: PropTypes.number,
+    total: PropTypes.number,
 };

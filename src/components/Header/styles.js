@@ -10,7 +10,8 @@ export const Container = styled.div`
     border: 1px solid #f9fafa;
     display: flex;
     flex-direction: column;
-    gap: 16px
+    gap: 16px;
+    box-sizing: border-box;
 `
 
 export const Wrapper = styled.div`

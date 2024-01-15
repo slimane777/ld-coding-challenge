@@ -31,6 +31,7 @@ export const THead = styled.thead`
 `
 
 export const TBody = styled.tbody`
+    position: relative;
     & > tr:not(:last-child) > td {
         border-bottom: 1px dotted #f2f3f4 !important;
     };
@@ -39,5 +40,19 @@ export const TBody = styled.tbody`
         text-align: center;
         font-size: 14px;
         color: #202b36;
+    }
+`
+
+export const Error = styled.div`
+    width: 100%;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+    justify-content: center;
+    & > span {
+        font-size: 16px;
+        font-weight: 400;
     }
 `

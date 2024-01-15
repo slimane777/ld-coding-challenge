@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 
-
+/**
+ * 
+ * @param {*} pageData - an array of the current page's data
+ * @returns {minPower, maxPower} - returns the max and min power levels of the current page
+ */
 const useMaxMinPower = (pageData) => {
     const [minPower, setMinPower] = useState(0);
     const [maxPower, setMaxPower] = useState(0);

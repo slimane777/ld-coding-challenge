@@ -16,7 +16,7 @@ export const Select = styled.select`
 `
 
 export const Span = styled.span`
-    font-size: 14px;
+    font-size: 12px;
     color: #202b36;
 `
 

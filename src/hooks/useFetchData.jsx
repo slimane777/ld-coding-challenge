@@ -1,18 +1,29 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
-const useFetchData = (url, perPage, search = '', threshold, currentPage) => {
+const apiUrl = '/pokemon.json';
+
+/**
+ * 
+ * @param {number} perPage - number of records displayed per page
+ * @param {string} search - search term to be used to filter data by name
+ * @param {number} threshold - power threshold to be used to filter data by power level
+ * @param {number} currentPage - the current page to be used to return the according data
+ * @returns {data, loading, error, totalPages, total} - returns the appropriate data based on the params passed + loading and error states
+ */
+const useFetchData = (perPage, search = '', threshold, currentPage) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [totalPages, setTotalPages] = useState(1);
+  const [total, setTotal] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading(true);
 
-        const response = await axios.get(url);
+        const response = await axios.get(apiUrl);
 
         const pokemonData = response.data.map((pokemon) => ({
             ...pokemon,
@@ -36,6 +47,7 @@ const useFetchData = (url, perPage, search = '', threshold, currentPage) => {
             currentPage * perPage
         );
 
+        setTotal(filteredData.length)
         setData(paginatedData);
         setTotalPages(Math.ceil(filteredData.length / perPage));
         setLoading(false);
@@ -46,13 +58,14 @@ const useFetchData = (url, perPage, search = '', threshold, currentPage) => {
     };
 
     fetchData();
-  }, [url, perPage, threshold, search, currentPage]);
+  }, [perPage, threshold, search, currentPage]);
 
   return {
     data,
     loading,
     error,
     totalPages,
+    total,
   };
 };
 

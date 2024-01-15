@@ -20,8 +20,6 @@ const Container = styled.div`
   }
 `
 
-const apiUrl = '/pokemon.json';
-
 function App() {
   const [pageSize, setPageSize] = useState(5);
   const [threshold, setThreshold] = useState(null);
@@ -33,9 +31,12 @@ function App() {
 
   const { 
     data: pokemons, 
-    loading, error, totalPages,
+    loading, 
+    error, 
+    totalPages,
+    total,
   } =
-    useFetchData(apiUrl, pageSize, debouncedSearch, debouncedThreshold, currentPage);
+    useFetchData(pageSize, debouncedSearch, debouncedThreshold, currentPage);
 
   const {minPower, maxPower} = useMaxMinPower(pokemons)
 
@@ -60,10 +61,6 @@ function App() {
     }
   };
 
-  if(error){
-    return <div>{error}</div>
-  }
-
   return (
     <Container>
       <Header 
@@ -74,22 +71,17 @@ function App() {
         minPower={minPower}
         maxPower={maxPower}
       />
-
-      {
-        loading ?
-          <div>loading....</div>
-        :
-          <div className='table-wrapper'>
-            <Table data={pokemons} />
-            <Pagination 
-              pageSize={pageSize}
-              handlePageSizeChange={handlePageSizeChange}
-              handlePageChange={handlePageChange}
-              currentPage={currentPage}
-              totalPages={totalPages}
-            />
-          </div>
-      }
+      <div className='table-wrapper'>
+        <Table data={pokemons} error={error} loading={loading} />
+        <Pagination 
+          pageSize={pageSize}
+          handlePageSizeChange={handlePageSizeChange}
+          handlePageChange={handlePageChange}
+          currentPage={currentPage}
+          totalPages={totalPages}
+          total={total}
+        />
+      </div>
     </Container>
   );
 }
